@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>AddressBook</title>
+
+        <link rel="stylesheet" type="text/css" media="screen" href="/media/css/socialauth.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="/media/css/openid.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="/media/css/all.css" />
+        <style>
+        </style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>         
+<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script> 
+        <script type="text/javascript" src="/media/js/openid-jquery.js"></script> 
+  <script type="text/javascript">
+	$(document).ready(function() {
+	  openid.init('openid_identifier');
+	});
+  </script>
+
+{% block extrahead %}
+{% endblock %}
+    </head>
+<body>
+<div id="fb-root"></div> 
+<script>
+FB.init({
+    appId  : '{{FACEBOOK_API_KEY}}',
+    status : true, // check login status
+    cookie : true, // enable cookies to allow the server to access the session
+    xfbml  : true  // parse XFBML
+});
+{% block fb_extra %}
+{% endblock%}
+
+function logoutFb() {
+    FB.logout(function(response) {
+        return true;
+            });
+
+};
+</script>    
+
+<div class="wrapper">
+{% if user.is_authenticated %}
+      <p>You are logged in as <b>{{user.username}}</b>.
+         <a href="{% url socialauth_social_logout %}" onclick="return logoutFb()">Logout</a>
+       </p>
+                       {% else %}
+                      <p> Login using Facebook, Gmail, Twitter or OpenID</p>
+                      <div>
+            <!--<a href="{{ FB_LOGIN_URL|safe}}">-->
+            <a href="{% url socialauth_facebook_login %}">
+             <img style="margin:0px;padding:0px;" src="/media/icons/facebook-32.png" /></a>
+            <a href="/accounts/openid/?action=verify&openid_next=%2Faddressbook&openid_identifier=https%3A%2F%2Fwww.google.com%2Faccounts%2Fo8%2Fid"><img src="/media/icons/google-32.png" /></a>
+            <a href="{% url socialauth_twitter_login %}">
+                <img src="/media/icons/twitter-32.png" /></a>
+<form action="{% url socialauth_openid_login %}" method="get" id="openid_form">
+or 
+  <input type="hidden" name="action" value="verify" />
+  
+      <input type="hidden" name="openid_next" value="{{ next }}">
+		<input id="openid_identifier" style="background: url("/media/images/openid-inputicon.gif") no-repeat;" name="openid_identifier" type="text" value="" />
+		<input id="openid_submit" type="submit" value="Sign In"/>
+</form>
+</div>        
+        {% endif %}
+</div>
+ {% block content %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,30 @@
+An online addressbook
+
+Features:
+* Allow users to register themselves via their Facebook, Twitter,
+Google, or OpenID credentials
+* Users can create contact records organized into user-defined categories
+* The app supports storing for each contact:
+** Multiple physical addresses
+** Multiple phone numbers
+** Multiple emails
+* Each contact record supports exporting that record in vCard
+format (http://en.wikipedia.org/wiki/VCard)
+* Each contact record presents a QR code to allow a barcode
+scanner to import it
+* Each contact record accesses any Gravatar for the contact
+(http://en.gravatar.com/)
+* Each contact uses the hCard microformat in its markup
+http://microformats.org/wiki/hcard
+
+Install: clone it with git then 'pip install -r requirements.txt' to get dependencies
+
+1) Get necessary API keys for socialauth and put in socialauth_settings.py 
+2) Set params in localsettings.py
+
+3) Syncdb
+4) symlink admin media to project/media/admin
+
+5)(if you're running apache + mod_wsgi)
+    a) in apache/django.wsgi, set path appropriately (include proj dir and dir above it) 
+    b) set os.environ['DJANGO_SETTINGS_MODULE'] appropriately

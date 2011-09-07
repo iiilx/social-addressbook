@@ -1,0 +1,12 @@
+python-dateutil==1.5
+django-addressbook
+django==1.3
+psycopg2==2.4.1
+django-sentry
+yolk
+python-openid
+django-openid-consumer
+oauth
+ipython
+-e git+https://github.com/agiliq/Django-Socialauth.git#egg=socialauth
+-e git+https://github.com/facebook/python-sdk.git#egg=facebook

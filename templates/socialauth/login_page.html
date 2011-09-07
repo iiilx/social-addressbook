@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block fb_extra %}
+FB.Event.subscribe('auth.sessionChange', function(response) {
+  if (response.session) {
+     window.location = '/accounts/facebook_login/done/';
+  };
+});
+{% endblock %}
+
+
